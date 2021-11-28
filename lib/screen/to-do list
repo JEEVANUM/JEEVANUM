@@ -1,0 +1,12 @@
+
+To-do list
+
+1. find a currency api and country flag api and access data with api key
+
+2. access exchange rates between currencies and display on 'ExchangeRate.dart', change flag display with a flag api
+
+3. Enter conversion amount in text field, click convert, create a function that takes the entered amount and multiplies it by the conversion rate
+
+4. display the rates in the countryCards.
+
+5. fix keyboard pop up , pixel render overflow error
