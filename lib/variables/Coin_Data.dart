@@ -2,7 +2,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const List<String> currenciesList = ['AUD', 'BRL', 'CAD', 'CNY', 'EUR', 'GBP', 'HKD', 'IDR', 'ILS', 'INR', 'JPY', 'MXN', 'NOK', 'NZD', 'PLN', 'RON', 'RUB', 'SEK', 'SGD', 'USD', 'ZAR' ];
+const List<String> currenciesList = ['AUD', 'CAD', 'CNY', 'EUR', 'GBP', 'HKD','JPY', 'NZD', 'SGD', 'USD' ];
 
 const apiKey='8a4e0750-500e-11ec-8442-c71cc1ae2ac5';
 const coinAPIURL="https://freecurrencyapi.net/api/v2/latest?";
@@ -19,7 +19,6 @@ class CoinData{
 
     if(response.statusCode==200){
       var decodedData=jsonDecode(response.body)['data']['$finalCurrency'];
-      print(decodedData);
 
       return decodedData;
     }else{print(response.statusCode); throw 'problem with get request';}

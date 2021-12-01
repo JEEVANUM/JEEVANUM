@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:currency_converter/components/CountryCard.dart';
+import 'package:currency_converter/components/FromCountryCard.dart';
+import 'package:currency_converter/components/ToCountryCard.dart';
 
 
 class ConvertedCurrency extends StatelessWidget {
@@ -10,7 +11,7 @@ class ConvertedCurrency extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
-          child: CountryCard(
+          child: FromCountryCard(
             image: 'AUSFlag.jpeg',
             currencyAmount: '1000',
             currencyName: 'AUD',
@@ -22,7 +23,7 @@ class ConvertedCurrency extends StatelessWidget {
         size: 80,
         color: Color(0xFF3A7B1E),
       ),
-      CountryCard(image: 'USFlag.png', currencyAmount: '730', currencyName: 'USD')
+      ToCountryCard(image: 'USFlag.png', currencyAmount: '730', currencyName: 'USD')
 
       ]);
   }

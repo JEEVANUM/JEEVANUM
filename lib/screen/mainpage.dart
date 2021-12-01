@@ -31,12 +31,7 @@ class _MainPageState extends State<MainPage> {
           SizedBox(
             height: 15,
           ),
-          ReusableCard(
-              cardChild: ExchangeRate(
-            initialCurrency: 'AUD',
-            finalCurrency: 'USD',
-            convertedAmount: '0.73',
-          )),
+          ReusableCard(cardChild: ExchangeRate()),
           SizedBox(
             height: 15,
           ),
@@ -48,11 +43,19 @@ class _MainPageState extends State<MainPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 150,
-                  child: Text('Designed and built by Vincent Chen',style: TextStyle(color: Colors.white), textAlign:TextAlign.center,)),
-              SizedBox(width: 30,),
-              CircleAvatar(backgroundImage:AssetImage('assets/portrait.jpg'),maxRadius: 35,),
-
+                  width: 150,
+                  child: Text(
+                    'Designed and built by Vincent Chen',
+                    style: TextStyle(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  )),
+              SizedBox(
+                width: 30,
+              ),
+              CircleAvatar(
+                backgroundImage: AssetImage('assets/portrait.jpg'),
+                maxRadius: 35,
+              ),
             ],
           )
         ],
@@ -60,4 +63,3 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-

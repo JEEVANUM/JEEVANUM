@@ -2,6 +2,8 @@ import 'package:currency_converter/variables/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_converter/variables/Coin_Data.dart';
+import 'package:provider/provider.dart';
+import 'package:currency_converter/main.dart';
 
 class ConversionList extends StatefulWidget {
   @override
@@ -9,16 +11,37 @@ class ConversionList extends StatefulWidget {
 }
 
 class _ConversionListState extends State<ConversionList> {
-String From = 'AUD';
- String To='USD';
-String currencyRate;
-  void getData() async{
-    try{double rate=await CoinData(baseCurrency: From,finalCurrency: To).getCoinData();
+  final textController = TextEditingController();
 
-    currencyRate=rate.toStringAsFixed(3);
-    print(currencyRate);
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
 
-    }catch(e){print(e);}
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  String From = 'AUD';
+  String To = 'USD';
+  String currencyRate;
+  String inputAmount;
+
+  void getData() async {
+    try {
+      double rate =
+          await CoinData(baseCurrency: From, finalCurrency: To).getCoinData();
+
+      currencyRate = rate.toStringAsFixed(3);
+      Provider.of<Data>(context, listen: false).changeRate(currencyRate);
+      print('conversion rate is');
+      print(currencyRate);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -44,18 +67,21 @@ String currencyRate;
                     borderRadius: BorderRadius.circular(30)),
                 child: Center(
                   child: DropdownButton<String>(
-                      value: From,
-                      items: currenciesList
-                          .map((e) =>
-                              (DropdownMenuItem(child: Text(e), value: e)))
-                          .toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      From = value;
-                    });
-                  },
+                    value: From,
+                    items: currenciesList
+                        .map(
+                            (e) => (DropdownMenuItem(child: Text(e), value: e)))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        Provider.of<Data>(context, listen: false)
+                            .changeInitial(value);
+                        From = value;
+                        getData();
+                      });
+                    },
+                  ),
                 ),
-              ),
               ),
             ],
           ),
@@ -75,16 +101,21 @@ String currencyRate;
               Container(
                 width: 100,
                 decoration: BoxDecoration(
-                  color: Colors.yellow,
-                  borderRadius: BorderRadius.circular(30)
-                ),
+                    color: Colors.yellow,
+                    borderRadius: BorderRadius.circular(30)),
                 child: Center(
                   child: DropdownButton<String>(
                     value: To,
-                    items: currenciesList.map((e) => (DropdownMenuItem(child: Text(e),value: e))).toList(),
-                    onChanged: (value){
+                    items: currenciesList
+                        .map(
+                            (e) => (DropdownMenuItem(child: Text(e), value: e)))
+                        .toList(),
+                    onChanged: (value) {
                       setState(() {
-                        To=value;
+                        Provider.of<Data>(context, listen: false)
+                            .changeFinal(value);
+                        To = value;
+                        getData();
                       });
                     },
                   ),
@@ -96,11 +127,17 @@ String currencyRate;
         Padding(
           padding: const EdgeInsets.all(30.0),
           child: TextField(
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 25,
+            ),
+            controller: textController,
+            keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              
-                hintText: 'Amount', border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30)
-            )),
+                contentPadding: const EdgeInsets.all(15),
+                hintText: 'Amount',
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30))),
           ),
         ),
         Padding(
@@ -111,9 +148,22 @@ String currencyRate;
                 color: secondaryColor, borderRadius: BorderRadius.circular(30)),
             child: TextButton(
               onPressed: () {
-                print('From: $From');
-                print('To: $To');
-                getData();
+                setState(() {
+                  print('From: $From');
+                  print('To: $To');
+                  getData();
+
+                  inputAmount = textController.text;
+                  print('amount inputted is');
+                  print(inputAmount);
+                  Provider.of<Data>(context, listen: false)
+                      .enterAmount(inputAmount);
+                  Provider.of<Data>(context, listen: false)
+                      .calcConvertedAmount(currencyRate);
+                  Provider.of<Data>(context,listen: false).updateInitialCurDisplay(From);
+                  Provider.of<Data>(context,listen: false).updateFinalCurDisplay(To);
+
+                });
               },
               child: Text(
                 'Convert',
@@ -122,8 +172,9 @@ String currencyRate;
             ),
           ),
         ),
-
       ],
     );
   }
 }
+
+//lift inputAmount value and From value into CountryCard files

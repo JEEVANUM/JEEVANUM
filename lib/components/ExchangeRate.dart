@@ -1,21 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:currency_converter/variables/constants.dart';
-import 'package:currency_converter/components/ConversionList.dart';
+import 'package:provider/provider.dart';
+import 'package:currency_converter/main.dart';
 
 class ExchangeRate extends StatelessWidget {
- String initialCurrency;
- /////////
- ///////
- //use provider package to listen for changes to initialCurrency and finalCurrency-->
- //apply these listens to country card and exhcange rate card
- ///////
- ///////
- ///////
-  final String finalCurrency;
-  final String convertedAmount;
-
-  ExchangeRate({ @required this.initialCurrency, @required this.finalCurrency,@required this.convertedAmount});
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,10 +12,12 @@ class ExchangeRate extends StatelessWidget {
         children: [
           Text(
             'Exchange Rate',
-            style: TextStyle(color: secondaryColor,
-                fontSize: 20),
+            style: TextStyle(color: secondaryColor, fontSize: 20),
           ),
-          Text('1 $initialCurrency = $convertedAmount $finalCurrency',style: TextStyle(fontSize: 20),)
+          Text(
+            '1 ${Provider.of<Data>(context).initialCur} = ${(Provider.of<Data>(context).updatedRate==null)?'...':Provider.of<Data>(context).updatedRate} ${Provider.of<Data>(context).finalCur}',
+            style: TextStyle(fontSize: 20),
+          )
         ],
       ),
     );
