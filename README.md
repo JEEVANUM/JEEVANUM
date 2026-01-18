@@ -7,7 +7,7 @@
 
 - 💬 Ask me about ** Java, TypeScript, Python , Angular, SpringBoot, MySQL, Postgresql, Aws, Microservices, Kubernetes, Flutter, Dart, Firebase.**
 
-- 📫 How to reach me **jeevanum02@gmail.com**
+- 📫 How to reach me **jeevanumum@gmail.com**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
